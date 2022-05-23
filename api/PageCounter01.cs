@@ -7,29 +7,71 @@ using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using Microsoft.Azure.Cosmos.Table;
 
 namespace Company.Function
 {
+    public class ViewCount : TableEntity
+    {
+        public ViewCount(string URL)
+        {
+            this.PartitionKey = URL; 
+            this.RowKey = "visits"; 
+            Count = 0; 
+        }
+
+        public int Count { get; set; }
+
+        public ViewCount()
+        {
+            Count = 0;
+        }
+    }
+
     public static class PageCounter01
     {
+        const string tableName = "viewcountertable";
+
+        public static string GetConnectionString(string name)
+        {
+            string conStr = System.Environment.GetEnvironmentVariable($"ConnectionStrings:{name}", 
+                                                                    EnvironmentVariableTarget.Process);
+            if (string.IsNullOrEmpty(conStr)) 
+                conStr = System.Environment.GetEnvironmentVariable($"SQLCONNSTR_{name}", EnvironmentVariableTarget.Process);
+            return conStr;
+        }
+
         [FunctionName("PageCounter01")]
         public static async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)] HttpRequest req,
             ILogger log)
         {
-            log.LogInformation("C# HTTP trigger function processed a request.");
+            var storageAccountConnectionString = GetConnectionString("StorageConnectionString");
+            var storageAccount = CloudStorageAccount.Parse($"{storageAccountConnectionString}");
+            var tableClient = storageAccount.CreateCloudTableClient();
+            CloudTable table = tableClient.GetTableReference(tableName);
 
-            string name = req.Query["name"];
+            await table.CreateIfNotExistsAsync(); // we can let our code create the table if needed
 
             string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
             dynamic data = JsonConvert.DeserializeObject(requestBody);
-            name = name ?? data?.name;
+            string pageViewURL = data?.Key;
+            pageViewURL = "LANDER2";
 
-            string responseMessage = string.IsNullOrEmpty(name)
-                ? "This HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response."
-                : $"Hello, {name}. This HTTP triggered function executed successfully.";
+            if (pageViewURL == null)
+            {
+                return (ActionResult)new StatusCodeResult(503);
+            }
 
-            return new OkObjectResult(responseMessage);
+            var retrievedResult = table.Execute(TableOperation.Retrieve<ViewCount>(pageViewURL, "visits"));
+            var pageView = (ViewCount)retrievedResult.Result;
+
+            pageView = pageView ?? new ViewCount(pageViewURL);
+
+            pageView.Count++;
+
+            table.Execute(TableOperation.InsertOrReplace(pageView));
+            return (ActionResult)new OkObjectResult(pageView.Count.ToString());
         }
     }
 }
