@@ -46,7 +46,8 @@ namespace Company.Function
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)] HttpRequest req,
             ILogger log)
         {
-            var storageAccountConnectionString = GetConnectionString("StorageConnectionString");
+            //var storageAccountConnectionString = GetConnectionString("StorageConnectionString");
+            var storageAccountConnectionString = Environment.GetEnvironmentVariable("StorageConnectionString");
             var storageAccount = CloudStorageAccount.Parse($"{storageAccountConnectionString}");
             var tableClient = storageAccount.CreateCloudTableClient();
             CloudTable table = tableClient.GetTableReference(tableName);
