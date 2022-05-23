@@ -32,14 +32,14 @@ namespace Company.Function
     {
         const string tableName = "viewcountertable";
 
-        public static string GetConnectionString(string name)
-        {
-            string conStr = System.Environment.GetEnvironmentVariable($"ConnectionStrings:{name}", 
-                                                                    EnvironmentVariableTarget.Process);
-            if (string.IsNullOrEmpty(conStr)) 
-                conStr = System.Environment.GetEnvironmentVariable($"SQLCONNSTR_{name}", EnvironmentVariableTarget.Process);
-            return conStr;
-        }
+        //public static string GetConnectionString(string name)
+        //{
+        //    string conStr = System.Environment.GetEnvironmentVariable($"ConnectionStrings:{name}", 
+        //                                                            EnvironmentVariableTarget.Process);
+        //    if (string.IsNullOrEmpty(conStr)) 
+        //        conStr = System.Environment.GetEnvironmentVariable($"SQLCONNSTR_{name}", EnvironmentVariableTarget.Process);
+        //    return conStr;
+        //}
 
         [FunctionName("PageCounter01")]
         public static async Task<IActionResult> Run(
@@ -56,7 +56,7 @@ namespace Company.Function
             string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
             dynamic data = JsonConvert.DeserializeObject(requestBody);
             string pageViewURL = data?.Key;
-            pageViewURL = "LANDER2";
+            //pageViewURL = "LANDER2";
 
             if (pageViewURL == null)
             {
