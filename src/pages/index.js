@@ -28,13 +28,14 @@ const IndexPage = () => {
     axios({
       method: "GET",
       url: funcUrl,
-      data:{Key: 'LANDER2'}
+      data:{Key: 'LANDER'}
     }).then(function(response) {
       console.log(response.data)
       setResponseData(response.data)
     }).catch((error) => {
       console.log(error)
-  })
+    })
+  }
 
   return (
     <Layout>
