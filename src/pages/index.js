@@ -48,7 +48,7 @@ const IndexPage = () => {
            </p>
         
            <p className="mt-8 md:mt-12"> 
-             <button onClick={(e) => fetchData(e)} size="lg">Get Started</button>
+             <button type="button" className = "bg-primary hover:bg-primary-darker rounded text-white" onClick={(e) => fetchData(e)} size="lg">Get Started</button>
            </p>
            <hr />
            <p>{responseData}</p>
