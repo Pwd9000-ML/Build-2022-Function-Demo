@@ -25,15 +25,16 @@ const IndexPage = () => {
   let [responseData, setResponseData] = React.useState('')
   // fetches data
   const fetchData = (e) => {
-    axios.get(funcUrl, {params: {Key:'LANDER2'}})
-      .then(function(response) {
-        console.log(response.data)
-        setResponseData(response.data)
-      })
-      .catch((error) => {
-        console.log(error)
-      })
-  }
+    axios({
+      method: "GET",
+      url: funcUrl,
+      data:{Key: 'LANDER2'}
+    }).then(function(response) {
+      console.log(response.data)
+      setResponseData(response.data)
+    }).catch((error) => {
+      console.log(error)
+  })
 
   return (
     <Layout>
