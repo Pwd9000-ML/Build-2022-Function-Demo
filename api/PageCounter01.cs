@@ -11,22 +11,6 @@ using Microsoft.Azure.Cosmos.Table;
 
 namespace Company.Function
 {
-    public class ViewCount : TableEntity
-    {
-        public ViewCount(string URL)
-        {
-            this.PartitionKey = URL; 
-            this.RowKey = "visits"; 
-            Count = 0; 
-        }
-
-        public int Count { get; set; }
-
-        public ViewCount()
-        {
-            Count = 0;
-        }
-    }
 
     public static class PageCounter01
     {
@@ -50,7 +34,7 @@ namespace Company.Function
             var storageAccountConnectionString = Environment.GetEnvironmentVariable("StorageConnectionString");
             var storageAccount = CloudStorageAccount.Parse($"{storageAccountConnectionString}");
             var tableClient = storageAccount.CreateCloudTableClient();
-            CloudTable table = tableClient.GetTableReference(tableName);
+            var table = tableClient.GetTableReference(tableName);
 
             await table.CreateIfNotExistsAsync(); // we can let our code create the table if needed
 
