@@ -22,12 +22,12 @@ namespace api
             string pageViewURL,
             ILogger log)
         {
-            var storageAccountConnectionString = Environment.GetEnvironmentVariable("StorageConnectionString");
+            var storageAccountConnectionString = GetConnectionString("StorageConnectionString");
             var storageAccount = CloudStorageAccount.Parse($"{storageAccountConnectionString}");
             var tableClient = storageAccount.CreateCloudTableClient();
             var table = tableClient.GetTableReference(tableName);
 
-            await table.CreateIfNotExistsAsync(); // we can let our code create the table if needed
+            await table.CreateIfNotExistsAsync(); 
 
             var retrievedResult = table.Execute(TableOperation.Retrieve<ViewCount>(pageViewURL, "visits"));
 
@@ -38,6 +38,15 @@ namespace api
             var pageView = (ViewCount)retrievedResult.Result;
 
             return new OkObjectResult(pageView.Count.ToString());
+        }
+
+        public static string GetConnectionString(string name)
+        {
+           string conStr = System.Environment.GetEnvironmentVariable($"ConnectionStrings:{name}", 
+                                                                   EnvironmentVariableTarget.Process);
+           if (string.IsNullOrEmpty(conStr)) 
+               conStr = Environment.GetEnvironmentVariable("StorageConnectionString");
+            return conStr;
         }
     }
 }

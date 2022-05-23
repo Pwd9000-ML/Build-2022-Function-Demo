@@ -21,8 +21,7 @@ namespace api
             [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "PageCounter")] HttpRequest request,
             ILogger log)
         {
-            var storageAccountConnectionString = Environment.GetEnvironmentVariable("StorageConnectionString");
-            
+            var storageAccountConnectionString = GetConnectionString("StorageConnectionString");
             var storageAccount = CloudStorageAccount.Parse($"{storageAccountConnectionString}");
             var tableClient = storageAccount.CreateCloudTableClient();
             var table = tableClient.GetTableReference(tableName);
@@ -41,6 +40,15 @@ namespace api
             table.Execute(TableOperation.InsertOrReplace(pageView));
 
             return new OkObjectResult(pageView);
+        }
+
+        public static string GetConnectionString(string name)
+        {
+           string conStr = System.Environment.GetEnvironmentVariable($"ConnectionStrings:{name}", 
+                                                                   EnvironmentVariableTarget.Process);
+           if (string.IsNullOrEmpty(conStr)) 
+               conStr = Environment.GetEnvironmentVariable("StorageConnectionString");
+            return conStr;
         }
     }
 }

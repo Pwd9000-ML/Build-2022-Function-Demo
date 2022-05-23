@@ -11,8 +11,8 @@ import customerData from '../data/customer-data';
 import HeroImage from '../svg/HeroImage';
 import SvgCharts from '../svg/SvgCharts';
 
-const funcUrl = `https://counterfunc9000.azurewebsites.net/api/PageCounter01`;
-axios.post(funcUrl, {Key: 'LANDER2'})
+const funcUrl = `https://counterfunc9000.azurewebsites.net/api/pagecounter`;
+axios.post(funcUrl, {Key: 'LANDER'})
     .then(function (response) {
       console.log(response);
     })
@@ -25,12 +25,13 @@ const IndexPage = () => {
   let [responseData, setResponseData] = React.useState('')
   // fetches data
   const fetchData = (e) => {
-    axios(funcUrl, {Key: 'LANDER2'})
-      .then(function(response) {
-      console.log(response.data);
-      setResponseData(response.data);
-    }).catch((error) => {
-      console.log(error);
+    axios(funcUrl + "/LANDER")
+    .then(function(response) {
+      console.log(response.data)
+      setResponseData(response.data)
+    })
+    .catch((error) => {
+      console.log(error)
     })
   }
 
@@ -48,7 +49,7 @@ const IndexPage = () => {
            </p>
         
            <p className="mt-8 md:mt-12"> 
-             <button type="button" className = "bg-primary hover:bg-primary-darker rounded text-white" onClick={(e) => fetchData(e)} size="lg">Get Started</button>
+             <button onClick={(e) => fetchData(e)} size="lg">Get Started</button>
            </p>
            <hr />
            <p>{responseData}</p>
