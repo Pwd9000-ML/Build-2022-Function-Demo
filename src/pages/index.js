@@ -12,7 +12,7 @@ import HeroImage from '../svg/HeroImage';
 import SvgCharts from '../svg/SvgCharts';
 
 const funcUrl = `https://counterfunc9000.azurewebsites.net/api/PageCounter01`;
-axios.post(funcUrl, {Key: 'LANDER'})
+axios.post(funcUrl, {Key: 'LANDER2'})
     .then(function (response) {
       console.log(response);
     })
@@ -25,7 +25,7 @@ const IndexPage = () => {
   let [responseData, setResponseData] = React.useState('')
   // fetches data
   const fetchData = (e) => {
-    axios.get(funcUrl, {Key: 'LANDER'})
+    axios.get(funcUrl, {Key: 'LANDER2'})
       .then(function(response) {
         console.log(response.data)
         setResponseData(response.data)
