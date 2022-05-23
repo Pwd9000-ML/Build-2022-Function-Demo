@@ -22,7 +22,7 @@ namespace api
             ILogger log)
         {
             var storageAccountConnectionString = Environment.GetEnvironmentVariable("StorageConnectionString");
-
+            
             var storageAccount = CloudStorageAccount.Parse($"{storageAccountConnectionString}");
             var tableClient = storageAccount.CreateCloudTableClient();
             var table = tableClient.GetTableReference(tableName);
