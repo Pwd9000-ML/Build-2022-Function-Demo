@@ -59,10 +59,12 @@ namespace Company.Function
             string pageViewURL = data?.Key;
             //pageViewURL = "LANDER2";
 
-            if (pageViewURL == null)
+            string name = req.Query["Key"];
+            if (pageViewURL == null && String.IsNullOrEmpty(name))
             {
                 return (ActionResult)new StatusCodeResult(503);
             }
+            pageViewURL = name;
 
             var retrievedResult = table.Execute(TableOperation.Retrieve<ViewCount>(pageViewURL, "visits"));
             var pageView = (ViewCount)retrievedResult.Result;

@@ -25,7 +25,7 @@ const IndexPage = () => {
   let [responseData, setResponseData] = React.useState('')
   // fetches data
   const fetchData = (e) => {
-    axios(funcUrl, {Key: 'LANDER2'})
+    axios(funcUrl + "/?Key=LANDER2")
       .then(function(response) {
       console.log(response.data);
       setResponseData(response.data);
