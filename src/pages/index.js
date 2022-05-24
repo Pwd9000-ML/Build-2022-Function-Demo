@@ -11,7 +11,7 @@ import customerData from '../data/customer-data';
 import HeroImage from '../svg/HeroImage';
 import SvgCharts from '../svg/SvgCharts';
 
-const funcUrl = `https://counterfunc9000.azurewebsites.net/api/pagecounter`;
+const funcUrl = `https://counterdemofunc2022.azurewebsites.net/api/PageCounter`;
 axios.post(funcUrl, {Key: 'LANDER'})
     .then(function (response) {
       console.log(response);
