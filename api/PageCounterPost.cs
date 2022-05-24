@@ -21,7 +21,8 @@ namespace api
             [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "PageCounter")] HttpRequest request,
             ILogger log)
         {
-            var storageAccountConnectionString = GetConnectionString("StorageConnectionString");
+            // var storageAccountConnectionString = GetConnectionString("StorageConnectionString");
+            var storageAccountConnectionString = Environment.GetEnvironmentVariable("StorageConnectionString");
             var storageAccount = CloudStorageAccount.Parse($"{storageAccountConnectionString}");
             var tableClient = storageAccount.CreateCloudTableClient();
             var table = tableClient.GetTableReference(tableName);
