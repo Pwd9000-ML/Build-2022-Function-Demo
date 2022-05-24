@@ -27,6 +27,8 @@ namespace api
             var tableClient = storageAccount.CreateCloudTableClient();
             var table = tableClient.GetTableReference(tableName);
 
+            await table.CreateIfNotExistsAsync(); 
+
             var requestBody = await new StreamReader(request.Body).ReadToEndAsync();
             dynamic data = JsonConvert.DeserializeObject(requestBody);
             string pageViewURL = data?.Key;
