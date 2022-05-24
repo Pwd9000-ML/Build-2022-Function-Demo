@@ -24,7 +24,7 @@ const IndexPage = () => {
   // Create state variables
   let [responseData, setResponseData] = React.useState('')
   // fetches data
-  const fetchData = (e) => {
+  const fetchData = () => {
     axios(funcUrl + "/LANDER")
     .then(function(response) {
       console.log(response.data)
@@ -49,7 +49,7 @@ const IndexPage = () => {
            </p>
         
            <p className="mt-8 md:mt-12"> 
-             <button onClick={(e) => fetchData(e)} size="lg">Get Started</button>
+             <button onClick={() => fetchData()} size="lg">Get Started</button>
            </p>
            <hr />
            <p>{responseData}</p>
