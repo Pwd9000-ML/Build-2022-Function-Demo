@@ -4,11 +4,6 @@
 name: Build and deploy dotnet core app to Azure Function App - counterfunc9000
 
 on:
-  push:
-    branches:
-      - master
-    paths:
-     - 'api/**'
   workflow_dispatch:
 
 env:
