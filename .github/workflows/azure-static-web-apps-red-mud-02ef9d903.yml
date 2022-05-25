@@ -1,4 +1,4 @@
-name: Fallback - Azure Static Web Apps CI/CD - old
+name: Fb - Azure Static Web Apps CI/CD - old
 
 on:
   workflow_dispatch:
