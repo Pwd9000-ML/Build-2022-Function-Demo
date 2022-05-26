@@ -3,7 +3,7 @@
 ## Repo structure
 
 * **Repo root "."**: Gatsby static web app template 
-* **.github/workflow**: 2x workflows, 1x deploy static web app; 1x deploy functions into function app
+* **.github/workflows**: 2x workflows, 1x deploy static web app; 1x deploy functions into function app
 * **./api**: Azure functions deployed to function app: **counterdemofunc2022**
 * **./AzureLoadTest-JMeterScript**: Azure Load Test (Preview) - JMeter test for Functions
 * **./Build2022-Slides**: Build 2022 session slides
