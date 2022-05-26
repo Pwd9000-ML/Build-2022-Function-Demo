@@ -1,3 +1,13 @@
+# Overview
+
+## Repo structure
+
+* **Repo root "."**: Gatsby static web app template 
+* **.github/workflow**: 2x workflows, 1x deploy static web app; 1x deploy functions into function app
+* **./api**: Azure functions deployed to function app: **counterdemofunc2022**
+* **./AzureLoadTest-JMeterScript**: Azure Load Test (Preview) - JMeter test for Functions
+* **./Build2022-Slides**: Build 2022 session slides
+
 # Gatsby Lander
 
 This is an experimental starter built using [gatsby-theme-codebushi](https://github.com/codebushi/gatsby-theme-codebushi), a theme which uses [Tailwind CSS](https://tailwindcss.com/).
